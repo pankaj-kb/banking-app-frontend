@@ -1,14 +1,18 @@
 import { Outlet } from "react-router-dom";
-import NavBar from "../components/NavBar"
+import NavBar from "../components/NavBar";
+import { useSelector } from "react-redux";
 
 const Layout = () => {
-  return (
-    <div className="flex min-h-screen bg-black">
-      <div>
+  const loginStatus = useSelector((state) => state.auth.status);
+  return loginStatus ? (
+    <div className="flex min-h-screen bg-accentoffwhite">
+      <div className="flex justify-center items-center">
         <NavBar />
       </div>
       <Outlet />
     </div>
+  ) : (
+    <Outlet />
   );
 };
 
