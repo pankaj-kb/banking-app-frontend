@@ -1,7 +1,7 @@
 import axios from "../axiosConfig.js";
 import { useState } from "react";
 import Logo from "../components/Logo";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 
 function LoginPage() {
   const [formData, setFormData] = useState({
@@ -9,6 +9,8 @@ function LoginPage() {
     username: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const inputClass = `h-[50px] bg-accentgray text-accentwhite rounded-[10px] border-[2px] border-accentgray
   w-[100%] text-center text-[20px] focus:outline-none
@@ -38,6 +40,7 @@ function LoginPage() {
       const response = await axios.post(`/${userType}/login`, formData);
       setButtonText("logging in ...");
       console.log("response from Login: ", response);
+      navigate("/");
     } catch (error) {
       console.error("Login Failed: ", error);
       setButtonText("Failed..");
@@ -103,10 +106,17 @@ function LoginPage() {
             >
               {buttonText}
             </button>
-            <div>
-              <NavLink to="/register">
-                <h6 className="font-medium text-[15px] hover:cursor-pointer text-accentblack hover:">
-                  new user ? register
+            <div className="flex gap-[10px] flex-col">
+              <NavLink to={`/register/${userType}`}>
+                <h6 className="font-medium text-[20px] hover:cursor-pointer text-accentblack hover:">
+                  register
+                </h6>
+              </NavLink>
+              <NavLink
+                to={`/login/${userType === "banker" ? "customer" : "banker"}`}
+              >
+                <h6 className="font-medium text-[20px] hover:cursor-pointer text-accentblack hover:">
+                  {userType === "banker" ? "customer?" : "banker?"}
                 </h6>
               </NavLink>
             </div>
