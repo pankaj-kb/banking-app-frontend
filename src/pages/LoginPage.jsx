@@ -1,0 +1,120 @@
+import axios from "../axiosConfig.js";
+import { useState } from "react";
+import Logo from "../components/Logo";
+import { NavLink, useParams } from "react-router-dom";
+
+function LoginPage() {
+  const [formData, setFormData] = useState({
+    email: "",
+    username: "",
+    password: "",
+  });
+
+  const inputClass = `h-[50px] bg-accentgray text-accentwhite rounded-[10px] border-[2px] border-accentgray
+  w-[100%] text-center text-[20px] focus:outline-none
+    hover:cursor-pointer`;
+  const buttonClass = `h-[50px] bg-accentpurple text-accentwhite rounded-[10px] border-[2px] border-accentgray
+  w-[100%] text-center text-[20px] focus:outline-none
+    hover:cursor-pointer`;
+
+  const [buttonText, setButtonText] = useState("Login");
+
+  const { userType } = useParams();
+
+  console.log(userType);
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(`/${userType}/login`, formData);
+      setButtonText("logging in ...");
+      console.log("response from Login: ", response);
+    } catch (error) {
+      console.error("Login Failed: ", error);
+      setButtonText("Failed..");
+    } finally {
+      setButtonText("Login");
+    }
+  };
+
+  return (
+    <div
+      className="bg-accentoffwhite flex h-screen
+                  justify-center items-center"
+    >
+      <Logo
+        className={
+          "absolute top-[5%] text-[50px] hover:cursor-pointer text-accentpurple font-semibold"
+        }
+      />
+      <div
+        className="flex justify-center items-center border-[5px] border-opacity-55
+       border-accentpurple w-[70%] h-[70%] rounded-[20px] overflow-hidden"
+      >
+        <div className="flex-1">
+          <h1 className="text-[50px] font-extrabold ml-[30%] text-accentpurple whitespace-normal">
+            {"welcome back user".split(" ").map((char, index) => (
+              <span key={index} className="block">
+                {char}
+              </span>
+            ))}
+          </h1>
+        </div>
+        <div className="flex-1 mr-[40px]">
+          <form className="flex flex-col gap-[20px] items-center">
+            <input
+              type="email"
+              name="email"
+              value={formData.email.toLowerCase()}
+              onChange={handleFormChange}
+              placeholder="email"
+              className={inputClass}
+            />
+            <input
+              type="text"
+              name="username"
+              value={formData.username.toLowerCase()}
+              onChange={handleFormChange}
+              placeholder="username"
+              className={inputClass}
+            />
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleFormChange}
+              placeholder="password"
+              className={inputClass}
+            />
+            <button
+              type="submit"
+              name="password"
+              className={buttonClass}
+              onClick={handleLogin}
+            >
+              {buttonText}
+            </button>
+            <div>
+              <NavLink to="/register">
+                <h6 className="font-medium text-[15px] hover:cursor-pointer text-accentblack hover:">
+                  new user ? register
+                </h6>
+              </NavLink>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default LoginPage;
