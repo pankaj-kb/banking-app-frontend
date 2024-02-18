@@ -3,6 +3,7 @@ import { useState } from "react";
 import Logo from "../components/Logo";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { login, setRole } from "../features/authSlice.js";
 
 function LoginPage() {
   const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ function LoginPage() {
   });
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const inputClass = `h-[50px] bg-accentgray text-accentwhite rounded-[10px] border-[2px] border-accentgray
   w-[100%] text-center text-[20px] focus:outline-none
@@ -41,9 +42,9 @@ function LoginPage() {
       const response = await axios.post(`/${userType}/login`, formData);
       setButtonText("logging in ...");
       console.log("response from Login: ", response);
-      if(response.data.statusCode === 200) {
+      if (response.data.statusCode === 200) {
         dispatch(login(response.data.data.user));
-        dispatch(setRole(userType))
+        dispatch(setRole(userType));
         navigate("/");
       }
     } catch (error) {
