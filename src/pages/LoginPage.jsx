@@ -113,11 +113,11 @@ function LoginPage() {
               {buttonText}
             </button>
             <div className="flex gap-[10px] flex-col justify-center items-center">
-              <NavLink to={`/register/${userType}`}>
+              {/* <NavLink to={`/register/${userType}`}>
                 <h6 className="font-medium text-[20px] hover:cursor-pointer text-accentblack hover:">
                   register
                 </h6>
-              </NavLink>
+              </NavLink> */}
               <NavLink
                 to={`/login/${userType === "banker" ? "customer" : "banker"}`}
               >
