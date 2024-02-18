@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const SendMoney = ({ isOpen, onClose }) => {
+const SendMoney = ({ isOpen, onClose, onComplete }) => {
   const [to, setTo] = useState("");
   const [amount, setAmount] = useState("");
   const [pin, setPin] = useState("");
@@ -31,10 +31,10 @@ const SendMoney = ({ isOpen, onClose }) => {
 
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
-    if(amount <= 0) {
+    if (amount <= 0) {
       setAmountCheck("Amount should be greater than zero");
     } else {
-      setAmountCheck("")
+      setAmountCheck("");
     }
   };
 
@@ -51,6 +51,7 @@ const SendMoney = ({ isOpen, onClose }) => {
         amount,
         pin,
       });
+      onComplete();
       handleClose();
     } catch (error) {
       console.error("Error sending money:", error);
@@ -58,14 +59,13 @@ const SendMoney = ({ isOpen, onClose }) => {
   };
 
   const handleClose = () => {
-    setAmount("")
-      setPin("")
-      setTo("")
-      onClose();
-  }
+    setAmount("");
+    setPin("");
+    setTo("");
+    onClose();
+  };
 
   if (!isOpen) return null;
-
 
   return (
     <div className="fixed inset-0 z-50 overflow-auto bg-accentpurple bg-opacity-55 flex items-center justify-center">
@@ -103,7 +103,7 @@ const SendMoney = ({ isOpen, onClose }) => {
         </div>
         <div className="flex justify-end">
           <button
-            disabled={!to || !amount || !pin || amount <=0}
+            disabled={!to || !amount || !pin || amount <= 0}
             onClick={handleSendMoney}
             className="px-4 py-2 disabled:bg-accentgray bg-accentpurple text-accentwhite rounded-md"
           >

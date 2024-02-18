@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const WithdrawMoney = ({ isOpen, onClose }) => {
+const WithdrawMoney = ({ isOpen, onClose, onComplete }) => {
   const [to, setTo] = useState("");
   const [amount, setAmount] = useState("");
   const [pin, setPin] = useState("");
@@ -12,7 +12,11 @@ const WithdrawMoney = ({ isOpen, onClose }) => {
 
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
-    setAmountCheck("");
+    if (amount <= 0) {
+      setAmountCheck("Amount should be greater than zero");
+    } else {
+      setAmountCheck("");
+    }
   };
 
   const handlePinChange = (e) => {
@@ -27,6 +31,7 @@ const WithdrawMoney = ({ isOpen, onClose }) => {
         pin,
       });
       console.log(response);
+      onComplete();
       handleClose();
     } catch (error) {
       console.error("Error sending money:", error);
@@ -34,18 +39,18 @@ const WithdrawMoney = ({ isOpen, onClose }) => {
   };
 
   const handleClose = () => {
-    setAmount("")
-      setPin("")
-      setTo("")
-      onClose();
-  }
+    setAmount("");
+    setPin("");
+    setTo("");
+    onClose();
+  };
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 overflow-auto bg-accentpurple bg-opacity-55 flex items-center justify-center">
       <div className="bg-white p-6 rounded-md w-[30%]">
-        <h2 className="text-xl font-semibold mb-4">Deposit</h2>
+        <h2 className="text-xl font-semibold mb-4">Withdraw</h2>
         <div className="mb-4">
           <input
             type="number"
@@ -68,11 +73,11 @@ const WithdrawMoney = ({ isOpen, onClose }) => {
         </div>
         <div className="flex justify-end">
           <button
-            disabled={!amount || !pin}
+            disabled={!amount || !pin || amount <= 0}
             onClick={handleSendMoney}
             className="px-4 py-2 disabled:bg-accentgray bg-accentpurple text-accentwhite rounded-md"
           >
-            Send Money
+            withdraw amount
           </button>
           <button
             onClick={handleClose}

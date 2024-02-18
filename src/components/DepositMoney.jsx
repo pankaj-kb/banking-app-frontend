@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const DepositMoney = ({ isOpen, onClose }) => {
+const DepositMoney = ({ isOpen, onClose, onComplete }) => {
   const [to, setTo] = useState("");
   const [amount, setAmount] = useState("");
   const [pin, setPin] = useState("");
@@ -12,7 +12,11 @@ const DepositMoney = ({ isOpen, onClose }) => {
 
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
-    setAmountCheck("");
+    if (amount <= 0) {
+      setAmountCheck("Amount should be greater than zero");
+    } else {
+      setAmountCheck("");
+    }
   };
 
   const handlePinChange = (e) => {
@@ -27,6 +31,7 @@ const DepositMoney = ({ isOpen, onClose }) => {
         pin,
       });
       console.log(response);
+      onComplete();
       handleClose();
     } catch (error) {
       console.error("Error sending money:", error);
@@ -34,11 +39,11 @@ const DepositMoney = ({ isOpen, onClose }) => {
   };
 
   const handleClose = () => {
-    setAmount("")
-      setPin("")
-      setTo("")
-      onClose();
-  }
+    setAmount("");
+    setPin("");
+    setTo("");
+    onClose();
+  };
 
   if (!isOpen) return null;
 
@@ -68,11 +73,11 @@ const DepositMoney = ({ isOpen, onClose }) => {
         </div>
         <div className="flex justify-end">
           <button
-            disabled={!amount || !pin}
+            disabled={!amount || !pin || amount <= 0}
             onClick={handleSendMoney}
             className="px-4 py-2 disabled:bg-accentgray bg-accentpurple text-accentwhite rounded-md"
           >
-            Send Money
+            deposit amount
           </button>
           <button
             onClick={handleClose}
