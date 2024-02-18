@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login, setRole } from "./features/authSlice";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider, useNavigate } from "react-router-dom";
 import { router } from "./App";
 
 function AuthRouter() {
@@ -20,7 +20,6 @@ function AuthRouter() {
           } else {
             dispatch(setRole("banker"))
           }
-          navigate("/");
         }
       } catch (error) {
         console.error(error);
