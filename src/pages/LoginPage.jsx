@@ -26,6 +26,12 @@ function LoginPage() {
 
   const { userType } = useParams();
 
+  const [loginError, setLoginError] = useState("")
+
+  const handleLoginError = () => {
+    setLoginError("invalid credentials")
+  }
+
   // console.log(userType);
 
   const handleFormChange = (e) => {
@@ -49,6 +55,7 @@ function LoginPage() {
       }
     } catch (error) {
       console.error("Login Failed: ", error);
+      handleLoginError()
       setButtonText("Failed..");
     } finally {
       setButtonText("Login");
@@ -112,6 +119,7 @@ function LoginPage() {
             >
               {buttonText}
             </button>
+            <span>{loginError}</span>
             <div className="flex gap-[10px] flex-col justify-center items-center">
               {/* <NavLink to={`/register/${userType}`}>
                 <h6 className="font-medium text-[20px] hover:cursor-pointer text-accentblack hover:">
