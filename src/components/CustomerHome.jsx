@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import TransactionCard from "./TransactionCard";
 import axios from "axios";
 import SendMoney from "./SendMoney";
-import DepositMoney from "./DepositMoney"
-
+import DepositMoney from "./DepositMoney";
+import WithdrawMoney from "./WithdrawMoney";
 const CustomerHome = () => {
   const balance = useSelector((state) => state.auth.userData.balance);
   const customerId = useSelector((state) => state.auth.userData._id);
@@ -45,6 +45,11 @@ const CustomerHome = () => {
   const openDepositModal = () => setDepositModalOpen(true);
   const closeDepositModal = () => setDepositModalOpen(false);
 
+  const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
+
+  const openWithdrawModal = () => setWithdrawModalOpen(true);
+  const closeWithdrawModal = () => setWithdrawModalOpen(false);
+
   return (
     <>
       <div className="flex items-center justify-center gap-[10%] bg-accentoffwhite">
@@ -66,23 +71,33 @@ const CustomerHome = () => {
           </button>
         </div>
         <div className="flex gap-12 items-center">
-          <button onClick={openSendMoneyModal} className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg">
+          <button
+            onClick={openSendMoneyModal}
+            className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
+          >
             Send Money
           </button>
           <SendMoney
             isOpen={sendMoneyModalOpen}
             onClose={closeSendMoneyModal}
           />
-          <button onClick={openDepositModal} className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg">
+          <button
+            onClick={openDepositModal}
+            className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
+          >
             Deposit
           </button>
-          <DepositMoney
-            isOpen={depositModalOpen}
-            onClose={closeDepositModal}
-          />
-          <button className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg">
+          <DepositMoney isOpen={depositModalOpen} onClose={closeDepositModal} />
+          <button
+            onClick={openWithdrawModal}
+            className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
+          >
             Withdraw
           </button>
+          <WithdrawMoney
+            isOpen={withdrawModalOpen}
+            onClose={closeWithdrawModal}
+          />
         </div>
       </div>
       <div className="flex flex-col justify-center items-center">
