@@ -31,7 +31,11 @@ const SendMoney = ({ isOpen, onClose }) => {
 
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
-    setAmountCheck("");
+    if(amount <= 0) {
+      setAmountCheck("Amount should be greater than zero");
+    } else {
+      setAmountCheck("")
+    }
   };
 
   const handlePinChange = (e) => {
@@ -47,14 +51,21 @@ const SendMoney = ({ isOpen, onClose }) => {
         amount,
         pin,
       });
-      console.log(response);
-      onClose();
+      handleClose();
     } catch (error) {
       console.error("Error sending money:", error);
     }
   };
 
+  const handleClose = () => {
+    setAmount("")
+      setPin("")
+      setTo("")
+      onClose();
+  }
+
   if (!isOpen) return null;
+
 
   return (
     <div className="fixed inset-0 z-50 overflow-auto bg-accentpurple bg-opacity-55 flex items-center justify-center">
@@ -92,14 +103,14 @@ const SendMoney = ({ isOpen, onClose }) => {
         </div>
         <div className="flex justify-end">
           <button
-            disabled={!to || !amount || !pin}
+            disabled={!to || !amount || !pin || amount <=0}
             onClick={handleSendMoney}
             className="px-4 py-2 disabled:bg-accentgray bg-accentpurple text-accentwhite rounded-md"
           >
             Send Money
           </button>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
           >
             Close
