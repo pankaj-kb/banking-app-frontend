@@ -2,6 +2,7 @@ import axios from "../axiosConfig.js";
 import { useState } from "react";
 import Logo from "../components/Logo";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function LoginPage() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ function LoginPage() {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const inputClass = `h-[50px] bg-accentgray text-accentwhite rounded-[10px] border-[2px] border-accentgray
   w-[100%] text-center text-[20px] focus:outline-none
@@ -23,7 +25,7 @@ function LoginPage() {
 
   const { userType } = useParams();
 
-  console.log(userType);
+  // console.log(userType);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -35,12 +37,15 @@ function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post(`/${userType}/login`, formData);
       setButtonText("logging in ...");
       console.log("response from Login: ", response);
-      navigate("/");
+      if(response.data.statusCode === 200) {
+        dispatch(login(response.data.data.user));
+        dispatch(setRole(userType))
+        navigate("/");
+      }
     } catch (error) {
       console.error("Login Failed: ", error);
       setButtonText("Failed..");
@@ -106,7 +111,7 @@ function LoginPage() {
             >
               {buttonText}
             </button>
-            <div className="flex gap-[10px] flex-col">
+            <div className="flex gap-[10px] flex-col justify-center items-center">
               <NavLink to={`/register/${userType}`}>
                 <h6 className="font-medium text-[20px] hover:cursor-pointer text-accentblack hover:">
                   register
