@@ -6,6 +6,7 @@ import SendMoney from "./SendMoney";
 import DepositMoney from "./DepositMoney";
 import WithdrawMoney from "./WithdrawMoney";
 const CustomerHome = () => {
+  
   const balance = useSelector((state) => state.auth.userData.balance);
   const customerId = useSelector((state) => state.auth.userData._id);
   const [transactions, setTransactions] = useState([]);
@@ -25,6 +26,19 @@ const CustomerHome = () => {
     };
     getTransactions();
   }, [customerId, sort]);
+
+  const handleTransactionComplete = async () => {
+    const response = await axios.get("/customer/current-user");
+    console.log(response);
+    if (response.data.statusCode === 200) {
+      dispatch(login(response.data.data));
+      if (!response.data.data?.role) {
+        dispatch(setRole("customer"));
+      } else {
+        dispatch(setRole("banker"));
+      }
+    }
+  };
 
   const handleShowClick = () => {
     setShowBalance(!showBalance);
@@ -80,6 +94,7 @@ const CustomerHome = () => {
           <SendMoney
             isOpen={sendMoneyModalOpen}
             onClose={closeSendMoneyModal}
+            onComplete={handleTransactionComplete}
           />
           <button
             onClick={openDepositModal}
@@ -87,7 +102,11 @@ const CustomerHome = () => {
           >
             Deposit
           </button>
-          <DepositMoney isOpen={depositModalOpen} onClose={closeDepositModal} />
+          <DepositMoney
+            isOpen={depositModalOpen}
+            onClose={closeDepositModal}
+            onComplete={handleTransactionComplete}
+          />
           <button
             onClick={openWithdrawModal}
             className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
@@ -97,6 +116,7 @@ const CustomerHome = () => {
           <WithdrawMoney
             isOpen={withdrawModalOpen}
             onClose={closeWithdrawModal}
+            onComplete={handleTransactionComplete}
           />
         </div>
       </div>

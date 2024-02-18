@@ -12,8 +12,8 @@ const TransactionCard = ({ transaction }) => {
     };
   
     return (
-      <div className="flex flex-col bg-accentpurple justify-center items-center gap-[20px] font-medium h-[150px] w-[30%] rounded-lg p-4">
-        <div className="flex gap-4 items-center justify-center">
+      <div className="flex flex-col bg-accentpurple justify-center items-center gap-[20px] font-medium h-[200px] w-[40%] rounded-lg p-4 mt-2">
+        <div className="flex gap-4 items-center justify-center w-[80%]">
           <h1 className="text-[20px] text-accentwhite text-center">
             Status: {transaction.status}
           </h1>
@@ -21,7 +21,7 @@ const TransactionCard = ({ transaction }) => {
             Type: {transaction.transactionType}
           </h1>
         </div>
-        <div className="flex gap-4 items-center justify-center">
+        <div className="flex gap-4 items-center justify-center w-[80%]">
           <h1 className="text-[20px] text-accentwhite text-center">
             From: {transaction.from}
           </h1>
@@ -29,9 +29,9 @@ const TransactionCard = ({ transaction }) => {
             To: {transaction.to}
           </h1>
         </div>
-        <div className="flex gap-4 items-center justify-center">
+        <div className="flex gap-4 items-center justify-center w-[80%]">
           <h1 className="text-[20px] text-accentwhite text-center">
-            Amount: {transaction.amount}
+            Amount: &#8377;{transaction.amount}
           </h1>
           <h1 className="text-[20px] text-accentwhite text-center">
             Date: {formatDate(transaction.createdAt)}

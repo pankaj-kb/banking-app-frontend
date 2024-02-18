@@ -30,7 +30,7 @@ const NavBar = () => {
       />
       <div className="flex gap-[100px] items-center text-center">
         <h1 className="font-medium text-[20px] text-accentpurple hover:cursor-pointer">
-          Hello, {userData.fullName}
+          Hello, {userData.fullName} ({userType})
         </h1>
         <button
           className="p-2 font-medium text-accentwhite text-[20px] bg-accentpurple rounded-md"
