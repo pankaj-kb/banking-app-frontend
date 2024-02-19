@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../axiosConfig.js";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/authSlice";

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../axiosConfig.js";
 import React, { useState } from "react";
 
 const DepositMoney = ({ isOpen, onClose, onComplete }) => {

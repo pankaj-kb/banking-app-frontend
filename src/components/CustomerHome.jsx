@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import TransactionCard from "./TransactionCard";
-import axios from "axios";
+import axios from "../axiosConfig.js";
 import SendMoney from "./SendMoney";
 import DepositMoney from "./DepositMoney";
 import WithdrawMoney from "./WithdrawMoney";

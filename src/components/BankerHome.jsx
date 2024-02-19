@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../axiosConfig.js";
 import CustomerCard from "./CustomerCard";
 
 const BankerHome = () => {
