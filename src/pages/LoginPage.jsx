@@ -4,6 +4,7 @@ import Logo from "../components/Logo";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login, setRole } from "../features/authSlice.js";
+import Cookies from "universal-cookie";
 
 function LoginPage() {
   const [formData, setFormData] = useState({
@@ -26,11 +27,11 @@ function LoginPage() {
 
   const { userType } = useParams();
 
-  const [loginError, setLoginError] = useState("")
+  const [loginError, setLoginError] = useState("");
 
   const handleLoginError = () => {
-    setLoginError("invalid credentials")
-  }
+    setLoginError("invalid credentials");
+  };
 
   // console.log(userType);
 
@@ -42,6 +43,8 @@ function LoginPage() {
     }));
   };
 
+  const cookies = new Cookies();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -49,13 +52,19 @@ function LoginPage() {
       setButtonText("logging in ...");
       console.log("response from Login: ", response);
       if (response.data.statusCode === 200) {
+        cookies.set("accessToken", response.data.data.accessToken, {
+          path: "/",
+        });
+        cookies.set("refreshToken", response.data.data.refreshToken, {
+          path: "/",
+        });
         dispatch(login(response.data.data.user));
         dispatch(setRole(userType));
         navigate("/");
       }
     } catch (error) {
       console.error("Login Failed: ", error);
-      handleLoginError()
+      handleLoginError();
       setButtonText("Failed..");
     } finally {
       setButtonText("Login");
