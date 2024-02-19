@@ -17,6 +17,8 @@ const NavBar = () => {
 
   const handleLogout = async () => {
     const response = await axios.post(`/${userType}/logout`, {});
+    localStorage.removeItem("accessToken")
+    localStorage.removeItem("refreshToken")
     console.log(response);
     dispatch(logout());
   };
