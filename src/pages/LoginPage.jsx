@@ -58,6 +58,8 @@ function LoginPage() {
         // cookies.set("refreshToken", response.data.data.refreshToken, {
         //   path: "/",
         // });
+        localStorage.setItem("accessToken", response.data.data.accessToken);
+        localStorage.setItem("refreshToken", response.data.data.refreshToken);
         dispatch(login(response.data.data.user));
         dispatch(setRole(userType));
         navigate("/");
