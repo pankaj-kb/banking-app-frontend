@@ -52,12 +52,12 @@ function LoginPage() {
       setButtonText("logging in ...");
       console.log("response from Login: ", response);
       if (response.data.statusCode === 200) {
-        cookies.set("accessToken", response.data.data.accessToken, {
-          path: "/",
-        });
-        cookies.set("refreshToken", response.data.data.refreshToken, {
-          path: "/",
-        });
+        // cookies.set("accessToken", response.data.data.accessToken, {
+        //   path: "/",
+        // });
+        // cookies.set("refreshToken", response.data.data.refreshToken, {
+        //   path: "/",
+        // });
         dispatch(login(response.data.data.user));
         dispatch(setRole(userType));
         navigate("/");
