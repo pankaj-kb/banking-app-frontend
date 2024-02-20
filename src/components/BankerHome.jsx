@@ -16,10 +16,12 @@ const BankerHome = () => {
 
   return (
     <>
-      <div className="flex flex-wrap justify-center items-center mt-[4%] gap-4 hover:cursor-pointer">
-        {customers.map((customer) => (
-          <CustomerCard key={customer._id} customer={customer} />
-        ))}
+      <div>
+        <div className="flex flex-col bg-accentoffwhite gap-4 w-screen lg:(flex-wrap justify-center items-center mt-[4%] gap-4) hover:cursor-pointer">
+          {customers.map((customer) => (
+            <CustomerCard key={customer._id} customer={customer} />
+          ))}
+        </div>
       </div>
     </>
   );

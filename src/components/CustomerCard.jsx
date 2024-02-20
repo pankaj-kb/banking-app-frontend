@@ -11,7 +11,8 @@ const CustomerCard = ({ customer }) => {
   return (
     <div
       onClick={handleOnClick}
-      className="flex flex-col bg-accentpurple text-accentwhite justify-center items-center gap-[20px] font-medium h-[150px] w-[30%] rounded-lg p-[100px]"
+      className="flex flex-wrap bg-accentpurple text-accentwhite 
+      justify-center items-center gap-[20px] font-medium rounded-lg p-[100px] w-[80%] text-center h-[30%]"
     >
       <h1>Username: {customer?.username}</h1>
       <h1>Name: {customer?.fullName}</h1>

@@ -16,11 +16,11 @@ function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const inputClass = `h-[50px] bg-accentgray text-accentwhite rounded-[10px] border-[2px] border-accentgray
-  w-[100%] text-center text-[20px] focus:outline-none
+  const inputClass = `h-[60px] bg-accentgray text-accentwhite rounded-[10px] border-[2px] border-accentgray
+  w-[350px] text-center text-[20px] focus:outline-none
     hover:cursor-pointer`;
-  const buttonClass = `h-[50px] bg-accentpurple text-accentwhite rounded-[10px] border-[2px] border-accentgray
-  w-[100%] text-center text-[20px] focus:outline-none
+  const buttonClass = `h-[60px] bg-accentpurple text-accentwhite rounded-[10px] border-[2px] border-accentgray
+  w-[350px] text-center text-[20px] focus:outline-none
     hover:cursor-pointer`;
 
   const [buttonText, setButtonText] = useState("Login");
@@ -43,7 +43,7 @@ function LoginPage() {
     }));
   };
 
-  const cookies = new Cookies();
+  // const cookies = new Cookies();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -80,15 +80,15 @@ function LoginPage() {
     >
       <Logo
         className={
-          "absolute top-[5%] text-[50px] hover:cursor-pointer text-accentpurple font-semibold"
+          "absolute top-[2%] left-4 text-[50px] hover:cursor-pointer text-accentpurple font-bold lg:(absolute font-semibold)"
         }
       />
       <div
-        className="flex justify-center items-center border-[5px] border-opacity-55
-       border-accentpurple w-[70%] h-[70%] rounded-[20px] overflow-hidden"
+        className="flex justify-center items-center rounded-[20px] overflow-hidden gap-12 lg:(border-[5px] border-opacity-55
+       border-accentpurple w-[70%] h-[70%] gap-0)"
       >
         <div className="flex-1">
-          <h1 className="text-[50px] font-extrabold ml-[30%] text-accentpurple whitespace-normal">
+          <h1 className="text-[50px] font-extrabold lg:ml-[30%] text-accentpurple whitespace-normal">
             {"welcome back user".split(" ").map((char, index) => (
               <span key={index} className="block">
                 {char}
@@ -96,8 +96,8 @@ function LoginPage() {
             ))}
           </h1>
         </div>
-        <div className="flex-1 mr-[40px]">
-          <form className="flex flex-col gap-[20px] items-center">
+        <div className="flex-1 lg:mr-[40px]">
+          <form className="flex flex-col gap-8 lg:gap-[20px] items-center">
             <input
               type="email"
               name="email"
@@ -130,7 +130,7 @@ function LoginPage() {
             >
               {buttonText}
             </button>
-            <span>{loginError}</span>
+            <span className="text-[18px]">{loginError}</span>
             <div className="flex gap-[10px] flex-col justify-center items-center">
               {/* <NavLink to={`/register/${userType}`}>
                 <h6 className="font-medium text-[20px] hover:cursor-pointer text-accentblack hover:">

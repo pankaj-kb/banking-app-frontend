@@ -2,7 +2,6 @@ import axios from "../axiosConfig.js";
 import React, { useState } from "react";
 
 const WithdrawMoney = ({ isOpen, onClose, onComplete }) => {
-  const [to, setTo] = useState("");
   const [amount, setAmount] = useState("");
   const [pin, setPin] = useState("");
   const [usernameCheck, setUsernameCheck] = useState("");
@@ -31,9 +30,14 @@ const WithdrawMoney = ({ isOpen, onClose, onComplete }) => {
         pin,
       });
       console.log(response);
+      setPinCheck("Transaction Successfull");
+      setAmount("");
+      setPin("");
       onComplete();
-      handleClose();
     } catch (error) {
+      setAmount("");
+      setPin("");
+      setPinCheck("transaction failed: Invalid details");
       console.error("Error sending money:", error);
     }
   };
@@ -41,15 +45,17 @@ const WithdrawMoney = ({ isOpen, onClose, onComplete }) => {
   const handleClose = () => {
     setAmount("");
     setPin("");
-    setTo("");
     onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-auto bg-accentpurple bg-opacity-55 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-md w-[30%]">
+    <div
+      className="fixed inset-0 z-50 overflow-auto bg-accentpurple 
+    bg-opacity-55 flex items-center justify-center"
+    >
+      <div className="bg-white p-6 rounded-md h-[35%] w-[60%]">
         <h2 className="text-xl font-semibold mb-4">Withdraw</h2>
         <div className="mb-4">
           <input
@@ -59,7 +65,7 @@ const WithdrawMoney = ({ isOpen, onClose, onComplete }) => {
             onChange={handleAmountChange}
             className="mt-1 p-2 w-full text-[22px] font-medium border rounded-md bg-accentoffwhite"
           />
-          <span>{amountCheck}</span>
+          <span className="text-[12px]">{amountCheck}</span>
         </div>
         <div className="mb-4">
           <input
@@ -69,7 +75,7 @@ const WithdrawMoney = ({ isOpen, onClose, onComplete }) => {
             onChange={handlePinChange}
             className="mt-1 p-2 w-full text-[22px] font-medium border rounded-md bg-accentoffwhite"
           />
-          <span>{pinCheck}</span>
+          <span className="text-[12px]">{pinCheck}</span>
         </div>
         <div className="flex justify-end">
           <button

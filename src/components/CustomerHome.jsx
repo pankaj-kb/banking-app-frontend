@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import TransactionCard from "./TransactionCard";
 import axios from "../axiosConfig.js";
 import SendMoney from "./SendMoney";
 import DepositMoney from "./DepositMoney";
 import WithdrawMoney from "./WithdrawMoney";
+
 const CustomerHome = () => {
-  
+  const dispatch = useDispatch();
   const balance = useSelector((state) => state.auth.userData.balance);
   const customerId = useSelector((state) => state.auth.userData._id);
   const [transactions, setTransactions] = useState([]);
   const [showBalance, setShowBalance] = useState(false);
   const [sort, setSort] = useState(true);
-  //   console.log(balance)
 
   useEffect(() => {
     const getTransactions = async () => {
@@ -27,7 +27,16 @@ const CustomerHome = () => {
     getTransactions();
   }, [customerId, sort]);
 
+  const getTransactions = async () => {
+    const response = await axios.get(
+      `/customer/transactions/${customerId}/?sortOrder=${sort ? "desc" : "asc"}`
+    );
+    setTransactions(response.data.data);
+    console.log(response);
+  };
+
   const handleTransactionComplete = async () => {
+    getTransactions();
     const response = await axios.get("/customer/current-user");
     console.log(response);
     if (response.data.statusCode === 200) {
@@ -49,6 +58,12 @@ const CustomerHome = () => {
     setSort(!sort);
   };
 
+  const [showOptions, setShowOptions] = useState(false);
+
+  const toggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
+
   const [sendMoneyModalOpen, setSendMoneyModalOpen] = useState(false);
 
   const openSendMoneyModal = () => setSendMoneyModalOpen(true);
@@ -66,8 +81,8 @@ const CustomerHome = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center gap-[10%] bg-accentoffwhite">
-        <div className="flex gap-6 items-center">
+      <div className="flex flex-col bg-accentoffwhite gap-4 lg:w-screen">
+        <div className="flex flex-col gap-6 items-center">
           {showBalance ? (
             <h1 className="text-[20px] text-accentpurple font-medium w-[100px]">
               ₹ {balance}
@@ -84,50 +99,60 @@ const CustomerHome = () => {
             Show Balance
           </button>
         </div>
-        <div className="flex gap-12 items-center">
+        <div className="flex flex-col gap-4 items-center">
           <button
-            onClick={openSendMoneyModal}
+            onClick={toggleOptions}
             className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
           >
-            Send Money
+            {showOptions ? "Make Payment" : "Make Payment"}
           </button>
-          <SendMoney
-            isOpen={sendMoneyModalOpen}
-            onClose={closeSendMoneyModal}
-            onComplete={handleTransactionComplete}
-          />
-          <button
-            onClick={openDepositModal}
-            className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
-          >
-            Deposit
-          </button>
-          <DepositMoney
-            isOpen={depositModalOpen}
-            onClose={closeDepositModal}
-            onComplete={handleTransactionComplete}
-          />
-          <button
-            onClick={openWithdrawModal}
-            className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
-          >
-            Withdraw
-          </button>
-          <WithdrawMoney
-            isOpen={withdrawModalOpen}
-            onClose={closeWithdrawModal}
-            onComplete={handleTransactionComplete}
-          />
+          {showOptions && (
+            <div className="flex gap-4">
+              <button
+                onClick={openSendMoneyModal}
+                className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
+              >
+                Send Money
+              </button>
+              <SendMoney
+                isOpen={sendMoneyModalOpen}
+                onClose={closeSendMoneyModal}
+                onComplete={handleTransactionComplete}
+              />
+              <button
+                onClick={openDepositModal}
+                className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
+              >
+                Deposit
+              </button>
+              <DepositMoney
+                isOpen={depositModalOpen}
+                onClose={closeDepositModal}
+                onComplete={handleTransactionComplete}
+              />
+              <button
+                onClick={openWithdrawModal}
+                className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
+              >
+                Withdraw
+              </button>
+              <WithdrawMoney
+                isOpen={withdrawModalOpen}
+                onClose={closeWithdrawModal}
+                onComplete={handleTransactionComplete}
+              />
+            </div>
+          )}
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col items-center gap-2">
         <button
           onClick={handleSort}
           className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg w-[100px]"
         >
           sort
         </button>
-        <div className="flex flex-wrap p-8 gap-12 items-center justify-center">
+        <div className="flex flex-col lg:flex-wrap lg:flex-row gap-2 items-center justify-center">
           {transactions.map((transaction) => (
             <TransactionCard key={transaction._id} transaction={transaction} />
           ))}

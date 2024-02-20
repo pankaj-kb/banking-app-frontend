@@ -51,9 +51,16 @@ const SendMoney = ({ isOpen, onClose, onComplete }) => {
         amount,
         pin,
       });
+      console.log(response);
+      setPinCheck("Transaction Successfull");
+      setAmount("");
+      setPin("");
+      setTo("");
       onComplete();
-      handleClose();
     } catch (error) {
+      setAmount("");
+      setUsernameCheck("");
+      setPinCheck("transaction failed: Invalid details");
       console.error("Error sending money:", error);
     }
   };
@@ -68,8 +75,11 @@ const SendMoney = ({ isOpen, onClose, onComplete }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-auto bg-accentpurple bg-opacity-55 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-md w-[30%]">
+    <div
+      className="fixed inset-0 z-50 overflow-auto bg-accentpurple
+     bg-opacity-55 flex items-center justify-center"
+    >
+      <div className="bg-white p-6 rounded-md h-[45%] w-[60%]">
         <h2 className="text-xl font-semibold mb-4">Send Money</h2>
         <div className="mb-4">
           <input
@@ -79,7 +89,7 @@ const SendMoney = ({ isOpen, onClose, onComplete }) => {
             onChange={handleToChange}
             className="mt-1 p-2 w-full text-[22px] font-medium border rounded-md bg-accentoffwhite"
           />
-          <span>{usernameCheck}</span>
+          <span className="text-[12px]">{usernameCheck}</span>
         </div>
         <div className="mb-4">
           <input
@@ -89,7 +99,7 @@ const SendMoney = ({ isOpen, onClose, onComplete }) => {
             onChange={handleAmountChange}
             className="mt-1 p-2 w-full text-[22px] font-medium border rounded-md bg-accentoffwhite"
           />
-          <span>{amountCheck}</span>
+          <span className="text-[12px]">{amountCheck}</span>
         </div>
         <div className="mb-4">
           <input
@@ -99,7 +109,7 @@ const SendMoney = ({ isOpen, onClose, onComplete }) => {
             onChange={handlePinChange}
             className="mt-1 p-2 w-full text-[22px] font-medium border rounded-md bg-accentoffwhite"
           />
-          <span>{pinCheck}</span>
+          <span className="text-[12px]">{pinCheck}</span>
         </div>
         <div className="flex justify-end">
           <button

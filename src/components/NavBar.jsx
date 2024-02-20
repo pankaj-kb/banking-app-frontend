@@ -27,10 +27,10 @@ const NavBar = () => {
     <>
       <Logo
         className={
-          "absolute top-[5%] text-[50px] hover:cursor-pointer text-accentpurple font-semibold"
+          "absolute top-[2%] text-[40px] hover:cursor-pointer text-accentpurple font-semibold lg:top-[5%] lg:left-[5%] lg:text-[50px]"
         }
       />
-      <div className="flex gap-[100px] items-center text-center">
+      <div className="flex flex-col lg:flex-row items-center text-center gap-4 lg:pt-4">
         <h1 className="font-medium text-[20px] text-accentpurple hover:cursor-pointer">
           Hello, {userData.fullName} ({userType})
         </h1>

@@ -10,7 +10,7 @@ const HomePage = () => {
       <CustomerHome />
     </div>
   ) : (
-    <div>
+    <div className="sm:(flex flex-col justify-center items-center)">
       <BankerHome />
     </div>
   );
