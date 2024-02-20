@@ -80,12 +80,12 @@ function LoginPage() {
     >
       <Logo
         className={
-          "absolute top-[2%] left-4 text-[50px] hover:cursor-pointer text-accentpurple font-bold lg:(absolute font-semibold)"
+          "absolute top-[2%] left-4 text-[50px] hover:cursor-pointer text-accentpurple font-bold lg:absolute lg:font-semibold"
         }
       />
       <div
-        className="flex justify-center items-center rounded-[20px] overflow-hidden gap-12 lg:(border-[5px] border-opacity-55
-       border-accentpurple w-[70%] h-[70%] gap-0)"
+        className="flex flex-col lg:flex-row justify-center items-center rounded-[20px] overflow-hidden gap-12 lg:border-[5px] lg:border-opacity-55
+       border-accentpurple lg:w-[70%] lg:h-[70%] lg:gap-0)"
       >
         <div className="flex-1">
           <h1 className="text-[50px] font-extrabold lg:ml-[30%] text-accentpurple whitespace-normal">
