@@ -5,6 +5,7 @@ import axios from "../axiosConfig.js";
 import SendMoney from "./SendMoney";
 import DepositMoney from "./DepositMoney";
 import WithdrawMoney from "./WithdrawMoney";
+import Loading from "./Loading.jsx";
 
 const CustomerHome = () => {
   const dispatch = useDispatch();
@@ -85,83 +86,92 @@ const CustomerHome = () => {
 
   return (
     <>
-      <div className="flex flex-col bg-accentoffwhite gap-4">
-        <div className="flex flex-col gap-6 items-center">
-          {showBalance ? (
-            <h1 className="text-[20px] text-accentpurple font-medium w-[100px]">
-              ₹ {balance}
-            </h1>
-          ) : (
-            <h1 className="text-[20px] text-accentpurple font-medium w-[100px]">
-              ₹ &#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;
-            </h1>
-          )}
-          <button
-            onClick={handleShowClick}
-            className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
-          >
-            Show Balance
-          </button>
-        </div>
-        <div className="flex flex-col gap-4 items-center">
-          <button
-            onClick={toggleOptions}
-            className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
-          >
-            {showOptions ? "Make Payment" : "Make Payment"}
-          </button>
-          {showOptions && (
-            <div className="flex gap-4">
+      {transactions.length === 0 ? (
+        <Loading />
+      ) : (
+        <>
+          <div className="flex flex-col bg-accentoffwhite gap-4">
+            <div className="flex flex-col gap-6 items-center">
+              {showBalance ? (
+                <h1 className="text-[20px] text-accentpurple font-medium w-[100px]">
+                  ₹ {balance}
+                </h1>
+              ) : (
+                <h1 className="text-[20px] text-accentpurple font-medium w-[100px]">
+                  ₹ &#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;
+                </h1>
+              )}
               <button
-                onClick={openSendMoneyModal}
+                onClick={handleShowClick}
                 className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
               >
-                Send Money
+                Show Balance
               </button>
-              <SendMoney
-                isOpen={sendMoneyModalOpen}
-                onClose={closeSendMoneyModal}
-                onComplete={handleTransactionComplete}
-              />
-              <button
-                onClick={openDepositModal}
-                className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
-              >
-                Deposit
-              </button>
-              <DepositMoney
-                isOpen={depositModalOpen}
-                onClose={closeDepositModal}
-                onComplete={handleTransactionComplete}
-              />
-              <button
-                onClick={openWithdrawModal}
-                className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
-              >
-                Withdraw
-              </button>
-              <WithdrawMoney
-                isOpen={withdrawModalOpen}
-                onClose={closeWithdrawModal}
-                onComplete={handleTransactionComplete}
-              />
             </div>
-          )}
-        </div>
-      </div>
-      <div className="flex flex-col items-center gap-2">
-        <button
-          onClick={handleSort}
-          className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg w-[100px]"
-        >
-          sort
-        </button>
-        <div className="flex flex-col lg:flex-wrap lg:flex-row gap-2 items-center justify-center">
-          {transactions.map((transaction) => (
-            <TransactionCard key={transaction._id} transaction={transaction} />
-          ))}
-        </div>
-      </div>
+            <div className="flex flex-col gap-4 items-center">
+              <button
+                onClick={toggleOptions}
+                className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
+              >
+                {showOptions ? "Make Payment" : "Make Payment"}
+              </button>
+              {showOptions && (
+                <div className="flex gap-4">
+                  <button
+                    onClick={openSendMoneyModal}
+                    className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
+                  >
+                    Send Money
+                  </button>
+                  <SendMoney
+                    isOpen={sendMoneyModalOpen}
+                    onClose={closeSendMoneyModal}
+                    onComplete={handleTransactionComplete}
+                  />
+                  <button
+                    onClick={openDepositModal}
+                    className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
+                  >
+                    Deposit
+                  </button>
+                  <DepositMoney
+                    isOpen={depositModalOpen}
+                    onClose={closeDepositModal}
+                    onComplete={handleTransactionComplete}
+                  />
+                  <button
+                    onClick={openWithdrawModal}
+                    className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg"
+                  >
+                    Withdraw
+                  </button>
+                  <WithdrawMoney
+                    isOpen={withdrawModalOpen}
+                    onClose={closeWithdrawModal}
+                    onComplete={handleTransactionComplete}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <button
+              onClick={handleSort}
+              className="text-[20px] text-accentwhite bg-accentpurple p-2 font-medium rounded-lg w-[100px]"
+            >
+              sort
+            </button>
+            <div className="flex flex-col lg:flex-wrap lg:flex-row gap-2 items-center justify-center">
+              {transactions.map((transaction) => (
+                <TransactionCard
+                  key={transaction._id}
+                  transaction={transaction}
+                />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };
