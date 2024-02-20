@@ -8,7 +8,7 @@ import Loading from "./components/Loading.jsx";
 
 function AuthRouter() {
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.auth.userData);
+  // const userData = useSelector((state) => state.auth.userData);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
