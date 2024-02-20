@@ -17,6 +17,8 @@ const CustomerHome = () => {
 
   useEffect(() => {
     const getTransactions = async () => {
+      const checkLogin = await axios.get("/customer/current-user");
+      console.log(checkLogin);
       const response = await axios.get(
         `/customer/transactions/${customerId}/?sortOrder=${
           sort ? "desc" : "asc"
