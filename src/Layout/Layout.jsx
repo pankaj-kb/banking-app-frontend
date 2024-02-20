@@ -9,7 +9,7 @@ const Layout = () => {
       <div className="flex flex-col overflow-y-auto">
         <div
           className="sticky top-0 z-50 bg-accentoffwhite flex flex-col gap-12
-      lg:flex-row lg:gap-[50%] lg:items-center lg:justify-center"
+      lg:flex-row lg:gap-[50%] lg:items-center lg:justify-center lg:p-4"
         >
           <NavBar />
         </div>
