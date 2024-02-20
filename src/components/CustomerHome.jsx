@@ -8,7 +8,8 @@ import WithdrawMoney from "./WithdrawMoney";
 
 const CustomerHome = () => {
   const dispatch = useDispatch();
-  const balance = useSelector((state) => state.auth.userData.balance);
+  const userData = useSelector((state) => state.auth.userData);
+  const [balance, setBalance] = useState(userData.balance);
   const customerId = useSelector((state) => state.auth.userData._id);
   const [transactions, setTransactions] = useState([]);
   const [showBalance, setShowBalance] = useState(false);
@@ -41,6 +42,7 @@ const CustomerHome = () => {
     console.log(response);
     if (response.data.statusCode === 200) {
       dispatch(login(response.data.data));
+      setBalance(response.data.data.balance);
       if (!response.data.data?.role) {
         dispatch(setRole("customer"));
       } else {
@@ -81,7 +83,7 @@ const CustomerHome = () => {
 
   return (
     <>
-      <div className="flex flex-col bg-accentoffwhite gap-4 lg:w-screen">
+      <div className="flex flex-col bg-accentoffwhite gap-4">
         <div className="flex flex-col gap-6 items-center">
           {showBalance ? (
             <h1 className="text-[20px] text-accentpurple font-medium w-[100px]">
