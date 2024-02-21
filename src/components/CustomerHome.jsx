@@ -161,7 +161,7 @@ const CustomerHome = () => {
             >
               sort
             </button>
-            <div className="flex flex-col lg:flex-wrap lg:flex-row gap-2 items-center justify-center">
+            <div className="flex flex-col md:flex-wrap md:flex-row gap-2 items-center justify-center">
               {transactions.map((transaction) => (
                 <TransactionCard
                   key={transaction._id}
