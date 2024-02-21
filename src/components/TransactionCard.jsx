@@ -14,7 +14,7 @@ const TransactionCard = ({ transaction }) => {
   return (
     <div
       className="grid grid-cols-2 bg-accentpurple items-center justify-center
-      font-medium h-[150px] w-screen rounded-lg p-4 lg:w-[40%] lg:h-[2%] lg:gap-2 lg:p-6"
+      font-medium h-[180px] w-screen rounded-lg p-4 lg:w-[40%] lg:h-[2%] lg:gap-2 lg:p-6"
     >
       <h1 className="text-[20px] text-accentwhite text-center">
         Status: {transaction.status}
